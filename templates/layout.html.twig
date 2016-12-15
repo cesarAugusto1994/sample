@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title '' %} - My Silex Application</title>
+        <title>{% block title '' %} Easy</title>
 
         <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{{ asset('assets/custom/css/materialize.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/custom/css/style.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
+        <script src="{{ asset('assets/vendor/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ asset('assets/vendor/react/react.js') }}"></script>
+        <script src="{{ asset('assets/vendor/react/react-dom.js') }}"></script>
+        <script src="{{ asset('assets/vendor/react/react-dom.js') }}"></script>
+        <script src="{{ asset('assets/custom/js/materialize.min.js') }}"></script>
+        <script src="{{ asset('assets/custom/js/init.js') }}"></script>
+        <script src="{{ asset('assets/build/vendor.js') }}"></script>
+        <script>
+            $( document ).ready(function(){
+                $(".button-collapse").sideNav();
+            })
         </script>
     </head>
     <body>
+        <div id="layout"></div>
         {% block content %}{% endblock %}
+        <div id="footer"></div>
+        <script src="{{ asset('assets/build/bundle.js') }}"></script>
     </body>
 </html>
