@@ -2,50 +2,35 @@
 /**
  * Created by PhpStorm.
  * User: cesar
- * Date: 15/12/16
- * Time: 16:02
+ * Date: 26/12/16
+ * Time: 13:47
  */
 
 namespace Api\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Anexos
+ * Class Usuario
  * @package Api\Entities
- * @ORM\Table(name="anexos")
  * @ORM\Entity()
+ * @ORM\Table(name="usuario")
  */
-class Anexos implements \JsonSerializable
+class Usuario implements \JsonSerializable
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var integer
      */
     private $id;
 
     /**
-     * @ORM\Column(name="nome", type="string"))
+     * @ORM\Column(name="nome", type="string")
      * @var string
      */
     private $nome;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Musica")
-     * @ORM\JoinColumn(name="musica_id", referencedColumnName="id")
-     * @var Musica
-     */
-    private $musica;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     * @ORM\JoinColumn(referencedColumnName="id", name="usuario_id")
-     * @var Usuario
-     */
-    private $usuario;
 
     /**
      * @ORM\Column(name="cadastro", type="datetime")
@@ -84,38 +69,6 @@ class Anexos implements \JsonSerializable
     }
 
     /**
-     * @return Musica
-     */
-    public function getMusica()
-    {
-        return $this->musica;
-    }
-
-    /**
-     * @param Musica $musica
-     */
-    public function setMusica($musica)
-    {
-        $this->musica = $musica;
-    }
-
-    /**
-     * @return Usuario
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * @param Usuario $usuario
-     */
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCadastro()
@@ -147,16 +100,11 @@ class Anexos implements \JsonSerializable
         $this->ativo = $ativo;
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize()
     {
         return [
             'id' => $this->id,
-            'nome' => $this->nome,
-            'usuario' => $this->usuario,
-            'cadastro' =>$this->cadastro->format('d, F y')
+            'nome' => $this->nome
         ];
     }
 }

@@ -7,7 +7,9 @@ webpackJsonp([0,1],[
 	__webpack_require__(47);
 	__webpack_require__(48);
 	__webpack_require__(49);
-	module.exports = __webpack_require__(50);
+	__webpack_require__(50);
+	__webpack_require__(51);
+	module.exports = __webpack_require__(52);
 
 
 /***/ },
@@ -4430,7 +4432,7 @@ webpackJsonp([0,1],[
 	        if (this.state.data.length !== 0) {
 	            view = React.createElement(
 	                'div',
-	                { id: 'index-banner', className: 'teal' },
+	                { id: 'index-banner', className: '' },
 	                React.createElement(
 	                    'div',
 	                    { className: 'section no-pad-bot' },
@@ -4443,6 +4445,24 @@ webpackJsonp([0,1],[
 	                            React.createElement(
 	                                'div',
 	                                { className: 'row' },
+	                                React.createElement(
+	                                    'nav',
+	                                    null,
+	                                    React.createElement(
+	                                        'div',
+	                                        { className: 'nav-wrapper teal' },
+	                                        React.createElement(
+	                                            'div',
+	                                            { className: 'col s12' },
+	                                            React.createElement(
+	                                                'a',
+	                                                { href: '#!', className: 'breadcrumb' },
+	                                                this.props.colecaoNome
+	                                            )
+	                                        )
+	                                    ),
+	                                    React.createElement('br', null)
+	                                ),
 	                                this.state.data.map(function (categoria) {
 	                                    var href = '/categoria/' + categoria.nome.toLowerCase().replace(/ /g, '-');
 	                                    var img = '/assets/custom/img/' + categoria.imagem;
@@ -4498,7 +4518,7 @@ webpackJsonp([0,1],[
 	
 	
 	    render: function () {
-	        return React.createElement(Container, { colecao: this.props.colecao });
+	        return React.createElement(Container, { colecao: this.props.colecao, colecaoNome: this.props.colecaoNome });
 	    }
 	
 	});
@@ -4506,8 +4526,9 @@ webpackJsonp([0,1],[
 	if (document.getElementById('list')) {
 	
 	    var colecao = $("#list").data('colecao');
+	    var colecaoNome = $("#list").data('colecao-nome');
 	
-	    ReactDOM.render(React.createElement(Render, { colecao: colecao }), document.getElementById('list'));
+	    ReactDOM.render(React.createElement(Render, { colecao: colecao, colecaoNome: colecaoNome }), document.getElementById('list'));
 	}
 
 /***/ },
@@ -4605,12 +4626,17 @@ webpackJsonp([0,1],[
 	                        React.createElement(
 	                            "h5",
 	                            { className: "white-text" },
-	                            "Company Bio"
+	                            "Sample ",
+	                            React.createElement(
+	                                "small",
+	                                null,
+	                                "Beta"
+	                            )
 	                        ),
 	                        React.createElement(
 	                            "p",
 	                            { className: "grey-text text-lighten-4" },
-	                            "We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated."
+	                            "Bem vindo ao acervo publico."
 	                        )
 	                    ),
 	                    React.createElement(
@@ -4630,34 +4656,7 @@ webpackJsonp([0,1],[
 	                                React.createElement(
 	                                    "a",
 	                                    { className: "white-text", href: "#!" },
-	                                    "Link 1"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 2"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 3"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 4"
+	                                    "Registrar-se"
 	                                )
 	                            )
 	                        )
@@ -4668,7 +4667,7 @@ webpackJsonp([0,1],[
 	                        React.createElement(
 	                            "h5",
 	                            { className: "white-text" },
-	                            "Connect"
+	                            "Links Uteis"
 	                        ),
 	                        React.createElement(
 	                            "ul",
@@ -4679,34 +4678,7 @@ webpackJsonp([0,1],[
 	                                React.createElement(
 	                                    "a",
 	                                    { className: "white-text", href: "#!" },
-	                                    "Link 1"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 2"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 3"
-	                                )
-	                            ),
-	                            React.createElement(
-	                                "li",
-	                                null,
-	                                React.createElement(
-	                                    "a",
-	                                    { className: "white-text", href: "#!" },
-	                                    "Link 4"
+	                                    "ICM"
 	                                )
 	                            )
 	                        )
@@ -4724,7 +4696,7 @@ webpackJsonp([0,1],[
 	                        "a",
 	                        { className: "brown-text text-lighten-3",
 	                            href: "http://materializecss.com" },
-	                        "Materialize"
+	                        "C\xE9sar Augusto"
 	                    )
 	                )
 	            )
@@ -4732,9 +4704,7 @@ webpackJsonp([0,1],[
 	    }
 	});
 	
-	if (document.getElementById('footer')) {
-	    ReactDOM.render(React.createElement(Footer, null), document.getElementById('footer'));
-	}
+	ReactDOM.render(React.createElement(Footer, null), document.getElementById('footer'));
 
 /***/ },
 /* 49 */
@@ -4749,7 +4719,7 @@ webpackJsonp([0,1],[
 	
 	
 	    getInitialState: function () {
-	        return { data: [] };
+	        return { data: [], categoria: [] };
 	    },
 	
 	    load: function () {
@@ -4758,6 +4728,12 @@ webpackJsonp([0,1],[
 	
 	        if (this.props.categoria) {
 	            slice = this.props.categoria;
+	
+	            $.get('/api/categoria/' + slice + '/single', function (result) {
+	                this.setState({ categoria: result });
+	            }.bind(this));
+	
+	            console.log(this.state.categoria);
 	        }
 	
 	        $.get('/api/musicas/' + slice, function (result) {
@@ -4772,7 +4748,7 @@ webpackJsonp([0,1],[
 	    render: function () {
 	        return React.createElement(
 	            'div',
-	            { id: 'index-banner', className: 'teal' },
+	            { id: 'index-banner', className: '' },
 	            React.createElement(
 	                'div',
 	                { className: 'section no-pad-bot' },
@@ -4785,6 +4761,29 @@ webpackJsonp([0,1],[
 	                        React.createElement(
 	                            'div',
 	                            { className: 'row' },
+	                            React.createElement(
+	                                'nav',
+	                                null,
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'nav-wrapper teal' },
+	                                    React.createElement(
+	                                        'div',
+	                                        { className: 'col s12' },
+	                                        React.createElement(
+	                                            'a',
+	                                            { href: '#!', className: 'breadcrumb' },
+	                                            this.state.categoria.colecao
+	                                        ),
+	                                        React.createElement(
+	                                            'a',
+	                                            { className: 'breadcrumb' },
+	                                            this.state.categoria.nome
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement('br', null)
+	                            ),
 	                            this.state.data.map(function (musica) {
 	                                var href = '/musica/' + musica.nome.toLowerCase().replace(/ /g, '-');
 	                                var img = '/assets/custom/img/background1.jpg';
@@ -4838,7 +4837,7 @@ webpackJsonp([0,1],[
 	
 	
 	    render: function () {
-	        return React.createElement(Container, { categoria: this.props.categoria });
+	        return React.createElement(Container, { categoria: this.props.categoria, categoriaNome: this.props.categoriaNome });
 	    }
 	
 	});
@@ -4846,8 +4845,9 @@ webpackJsonp([0,1],[
 	if (document.getElementById('views')) {
 	
 	    var categoria = $("#views").data('categoria');
+	    var categoriaNome = $("#views").data('categoria-nome');
 	
-	    ReactDOM.render(React.createElement(Render, { categoria: categoria }), document.getElementById('views'));
+	    ReactDOM.render(React.createElement(Render, { categoria: categoria, categoriaNome: categoriaNome }), document.getElementById('views'));
 	}
 
 /***/ },
@@ -4868,7 +4868,7 @@ webpackJsonp([0,1],[
 	
 	    load: function () {
 	
-	        let slice = '';
+	        var slice = '';
 	
 	        if (this.props.musica) {
 	            slice = this.props.musica;
@@ -4889,19 +4889,30 @@ webpackJsonp([0,1],[
 	            null,
 	            this.state.data.map(function (anexo) {
 	                return React.createElement(
-	                    'div',
-	                    { className: 'col s12 m4', key: anexo.id },
+	                    'ul',
+	                    { className: 'collection', key: anexo.id },
 	                    React.createElement(
-	                        'div',
-	                        { className: 'card' },
+	                        'li',
+	                        { className: 'collection-item avatar' },
 	                        React.createElement(
-	                            'div',
-	                            { className: 'card-content black-text' },
-	                            React.createElement(
-	                                'h3',
-	                                null,
-	                                anexo.nome
-	                            )
+	                            'i',
+	                            { className: 'material-icons circle red' },
+	                            'play_arrow'
+	                        ),
+	                        React.createElement(
+	                            'span',
+	                            { className: 'title' },
+	                            anexo.nome
+	                        ),
+	                        React.createElement(
+	                            'p',
+	                            null,
+	                            'Adicionado por ',
+	                            anexo.usuario.nome,
+	                            ' ',
+	                            React.createElement('br', null),
+	                            'Postado em ',
+	                            anexo.cadastro
 	                        )
 	                    )
 	                );
@@ -4938,7 +4949,7 @@ webpackJsonp([0,1],[
 	    render: function () {
 	        return React.createElement(
 	            'div',
-	            { id: 'index-banner', className: 'teal' },
+	            { id: 'index-banner', className: '' },
 	            React.createElement(
 	                'div',
 	                { className: 'section no-pad-bot' },
@@ -4953,18 +4964,41 @@ webpackJsonp([0,1],[
 	                            { className: 'row' },
 	                            React.createElement(
 	                                'div',
-	                                { className: 'card' },
+	                                { className: 'card teal' },
 	                                React.createElement(
 	                                    'div',
-	                                    { className: 'card-content black-text' },
+	                                    { className: 'card-content white-text' },
 	                                    React.createElement(
-	                                        'h3',
+	                                        'b',
 	                                        null,
 	                                        this.state.data.nome
+	                                    ),
+	                                    React.createElement(
+	                                        'a',
+	                                        { href: '#!', className: 'secondary-content' },
+	                                        React.createElement(
+	                                            'i',
+	                                            { className: 'material-icons' },
+	                                            'stars'
+	                                        )
 	                                    )
 	                                )
 	                            ),
-	                            React.createElement(Anexos, { musica: this.props.musica })
+	                            React.createElement(Anexos, { musica: this.props.musica }),
+	                            React.createElement(
+	                                'div',
+	                                { className: 'fixed-action-btn horizontal' },
+	                                React.createElement(
+	                                    'a',
+	                                    { href: '#modal1', className: 'modal-trigger waves-effect waves-light btn' },
+	                                    'Contribuir',
+	                                    React.createElement(
+	                                        'i',
+	                                        { className: 'material-icons right' },
+	                                        'add'
+	                                    )
+	                                )
+	                            )
 	                        )
 	                    )
 	                )
@@ -4973,12 +5007,48 @@ webpackJsonp([0,1],[
 	    }
 	});
 	
+	const ModalForm = React.createClass({
+	    displayName: 'ModalForm',
+	
+	
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            { id: 'modal1', className: 'modal' },
+	            React.createElement(
+	                'div',
+	                { className: 'modal-content' },
+	                React.createElement(
+	                    'h4',
+	                    null,
+	                    'Modal Header'
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'modal-footer' },
+	                React.createElement(
+	                    'a',
+	                    { href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
+	                    'Agree'
+	                )
+	            )
+	        );
+	    }
+	
+	});
+	
 	const Render = React.createClass({
 	    displayName: 'Render',
 	
 	
 	    render: function () {
-	        return React.createElement(Container, { musica: this.props.musica });
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(Container, { musica: this.props.musica }),
+	            React.createElement(ModalForm, null)
+	        );
 	    }
 	
 	});
@@ -4988,6 +5058,174 @@ webpackJsonp([0,1],[
 	    var musica = $("#single").data('musica');
 	
 	    ReactDOM.render(React.createElement(Render, { musica: musica }), document.getElementById('single'));
+	}
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by cesar on 13/12/16.
+	 */
+	
+	const Container = React.createClass({
+	    displayName: "Container",
+	
+	
+	    getInitialState: function () {
+	        return { data: [] };
+	    },
+	
+	    load: function () {
+	        $.get('/api/colecoes', function (result) {
+	            this.setState({ data: result });
+	        }.bind(this));
+	    },
+	
+	    componentDidMount: function () {
+	        this.load();
+	    },
+	
+	    render: function () {
+	        return React.createElement(
+	            "div",
+	            { id: "index-banner", className: "teal" },
+	            React.createElement(
+	                "div",
+	                { className: "section no-pad-bot" },
+	                React.createElement(
+	                    "div",
+	                    { className: "container" },
+	                    React.createElement(
+	                        "div",
+	                        { className: "section" },
+	                        React.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            React.createElement(
+	                                "ul",
+	                                { className: "collapsible", "data-collapsible": "accordion" },
+	                                this.state.data.map(function (colecao) {
+	                                    return React.createElement(
+	                                        "li",
+	                                        null,
+	                                        React.createElement(
+	                                            "div",
+	                                            { className: "collapsible-header" },
+	                                            React.createElement(
+	                                                "i",
+	                                                { className: "material-icons" },
+	                                                "filter_drama"
+	                                            ),
+	                                            colecao.nome
+	                                        ),
+	                                        React.createElement(
+	                                            "div",
+	                                            { className: "collapsible-body" },
+	                                            React.createElement(
+	                                                "p",
+	                                                null,
+	                                                "Lorem ipsum dolor sit amet."
+	                                            )
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+	
+	const Render = React.createClass({
+	    displayName: "Render",
+	
+	
+	    render: function () {
+	        return React.createElement(Container, null);
+	    }
+	
+	});
+	
+	if (document.getElementById('finder')) {
+	
+	    ReactDOM.render(React.createElement(Render, null), document.getElementById('finder'));
+	}
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by cesar on 26/12/16.
+	 */
+	
+	const Form = React.createClass({
+	    displayName: "Form",
+	
+	
+	    render: function () {
+	        return React.createElement(
+	            "div",
+	            { className: "container" },
+	            React.createElement(
+	                "div",
+	                { className: "section" },
+	                React.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    React.createElement(
+	                        "h4",
+	                        null,
+	                        "Adicionar Musica"
+	                    ),
+	                    React.createElement(
+	                        "form",
+	                        { className: "col s12" },
+	                        React.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            React.createElement(
+	                                "div",
+	                                { className: "input-field col s12" },
+	                                React.createElement("input", { id: "nome", type: "text", className: "validate" }),
+	                                React.createElement(
+	                                    "label",
+	                                    { htmlFor: "nome" },
+	                                    "Nome"
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            React.createElement(
+	                                "div",
+	                                { className: "input-field col s12" },
+	                                React.createElement("input", { id: "categoria", type: "text", className: "validate" }),
+	                                React.createElement(
+	                                    "label",
+	                                    { htmlFor: "categoria" },
+	                                    "Categoria"
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	
+	});
+	
+	if (document.getElementById('form-musicas')) {
+	    ReactDOM.render(React.createElement(
+	        "div",
+	        null,
+	        React.createElement(Form, null)
+	    ), document.getElementById('form-musicas'));
 	}
 
 /***/ }

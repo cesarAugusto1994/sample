@@ -7,7 +7,9 @@ module.exports = {
         "./src/front/layout.js",
         "./src/front/footer.js",
         "./src/front/views.js",
-        "./src/front/single.js"
+        "./src/front/single.js",
+        "./src/front/finder.js",
+        "./src/front/form-musicas.js"
     ],
     output: {
         filename: "web/assets/build/bundle.js"

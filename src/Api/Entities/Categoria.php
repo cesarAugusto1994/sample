@@ -141,7 +141,8 @@ class Categoria implements \JsonSerializable
             'id' => $this->id,
             'nome' => $this->nome,
             'musicas' => $this->musicas->getValues(),
-            'imagem' => $this->imagem
+            'imagem' => $this->imagem,
+            'colecao' => $this->colecao->getNome()
         ];
     }
 }

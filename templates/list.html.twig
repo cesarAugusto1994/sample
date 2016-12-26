@@ -1,8 +1,7 @@
-{% extends "layout.html.twig" %}
+{% extends "template.html.twig" %}
 
 {% block content %}
 
-    <div id="list" data-colecao="{{ colecao }}">Lista</div>
-    <script src="{{ asset('assets/build/bundle.js') }}"></script>
+    <div id="list" data-colecao="{{ colecao.id }}" data-colecao-nome="{{ colecao.nome }}">Lista</div>
 
 {% endblock %}

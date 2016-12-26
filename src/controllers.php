@@ -16,13 +16,17 @@ $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
 })->bind('homepage');
 
+$app->get('/login', function () use ($app) {
+    return $app['twig']->render('login.html.twig', array());
+})->bind('login');
+
 $app->get('/colecao/{colecao}', function ($colecao) use ($app) {
 
     if (!empty($colecao)) {
         $colecao = $app['colecao.repository']->findBy(['nome' => str_replace('-', ' ', $colecao)]);
     }
 
-    return $app['twig']->render('list.html.twig', array('colecao' => !empty($colecao[0]) ? $colecao[0]->getId() : null));
+    return $app['twig']->render('list.html.twig', array('colecao' => !empty($colecao[0]) ? $colecao[0] : null));
 })->bind('list')->value('colecao', 'todas');
 
 $app->get('/categoria/{categoria}', function ($categoria) use ($app) {
@@ -31,7 +35,7 @@ $app->get('/categoria/{categoria}', function ($categoria) use ($app) {
         $categoria = $app['categoria.repository']->findBy(['nome' => str_replace('-', ' ', $categoria)]);
     }
 
-    return $app['twig']->render('views.html.twig', array('categoria' => !empty($categoria[0]) ? $categoria[0]->getId() : null));
+    return $app['twig']->render('views.html.twig', array('categoria' => !empty($categoria[0]) ? $categoria[0] : null));
 
 })->value('categoria', 'todas');
 
@@ -44,6 +48,15 @@ $app->get('/musica/{musica}', function ($musica) use ($app) {
     return $app['twig']->render('single.html.twig', array('musica' => !empty($musica[0]) ? $musica[0]->getId() : null));
 
 })->value('musica', 'todas');
+
+
+$app->get('/finder', function () use ($app) {
+    return $app['twig']->render('finder.html.twig', array());
+});
+
+$app->get('/form-musicas', function () use ($app) {
+    return $app['twig']->render('form-musicas.html.twig', array());
+});
 
 /***********************************************************
  * Api
@@ -78,13 +91,18 @@ $app->get('/api/musicas/{categoria}', function ($categoria) use ($app) {
     return new \Symfony\Component\HttpFoundation\JsonResponse($musica);
 });
 
+$app->get('/api/categoria/{categoria}/single', function ($categoria) use ($app) {
+    $categoria = $app['categoria.repository']->find($categoria);
+    return new \Symfony\Component\HttpFoundation\JsonResponse($categoria);
+});
+
 $app->get('/api/musica/{musica}', function ($musica) use ($app) {
     $musica = $app['musica.repository']->find($musica);
     return new \Symfony\Component\HttpFoundation\JsonResponse($musica);
 });
 
 $app->get('/api/anexos/{musica}', function ($musica) use ($app) {
-    $anexos = $app['anexo.repository']->find($musica);
+    $anexos = $app['anexo.repository']->findBy(['musica' => $musica]);
     return new \Symfony\Component\HttpFoundation\JsonResponse($anexos);
 });
 

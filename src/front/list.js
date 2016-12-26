@@ -44,11 +44,20 @@ const Container = React.createClass({
         );
 
         if (this.state.data.length !== 0) {
-            view = (<div id="index-banner" className="teal">
+            view = (<div id="index-banner" className="">
                 <div className="section no-pad-bot">
                     <div className="container">
                         <div className="section">
                             <div className="row">
+
+                                <nav>
+                                    <div className="nav-wrapper teal">
+                                        <div className="col s12">
+                                            <a href="#!" className="breadcrumb">{this.props.colecaoNome}</a>
+                                        </div>
+                                    </div><br/>
+                                </nav>
+
                                 {this.state.data.map(function (categoria) {
                                     var href = '/categoria/' + categoria.nome.toLowerCase().replace(/ /g, '-');
                                     var img = '/assets/custom/img/' + categoria.imagem;
@@ -85,7 +94,7 @@ const Render = React.createClass({
 
     render: function () {
         return (
-            <Container colecao={this.props.colecao}/>
+            <Container colecao={this.props.colecao} colecaoNome={this.props.colecaoNome}/>
         )
     }
 
@@ -94,9 +103,10 @@ const Render = React.createClass({
 if (document.getElementById('list')) {
 
     var colecao = $("#list").data('colecao');
+    var colecaoNome = $("#list").data('colecao-nome');
 
     ReactDOM.render(
-        <Render colecao={colecao}/>,
+        <Render colecao={colecao} colecaoNome={colecaoNome}/>,
         document.getElementById('list')
     );
 
