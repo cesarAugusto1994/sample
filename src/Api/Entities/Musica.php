@@ -132,6 +132,7 @@ class Musica implements \JsonSerializable
             'id' => $this->id,
             'nome' => $this->nome,
             'numero' => $this->numero,
+            'numero_formatado' => str_pad($this->numero, 4, '0', STR_PAD_LEFT),
             'letra' => $this->letra
         ];
     }

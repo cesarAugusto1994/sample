@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Api\Repositories\FavoritosRepository")
  * @ORM\Table(name="favoritos")
  */
-class Favoritos
+class Favoritos implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -78,5 +78,13 @@ class Favoritos
     public function setMusica($musica)
     {
         $this->musica = $musica;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'musica' => $this->musica,
+            'usuario' => $this->usuario
+        ];
     }
 }

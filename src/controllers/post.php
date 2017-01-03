@@ -10,7 +10,6 @@ $post = $app['controllers_factory'];
 
 $post->post('/api/favoritos/add-remove', function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
 
-    $request->request->set('musica', 1);
     $request->request->set('usuario', 1);
 
     if (empty($request->request->all())) {
@@ -34,14 +33,21 @@ $post->post('/api/favoritos/add-remove', function (\Symfony\Component\HttpFounda
     ]);
 
     if (!empty($favoritos)) {
+
+        $app['db']->beginTransaction();
         $app['favoritos.repository']->remove($favoritos);
+        $app['db']->commit();
+
         return $app->json(['msg' => 'Removido de seus favoritos'], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
     }
 
     $favoritos = new \Api\Entities\Favoritos();
     $favoritos->setUsuario($usuario);
     $favoritos->setMusica($musica);
+
+    $app['db']->beginTransaction();
     $app['favoritos.repository']->save($favoritos);
+    $app['db']->commit();
 
     return $app->json(['msg' => 'Adicionado a seus favoritos'], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
 });

@@ -29,10 +29,23 @@ const Anexos = React.createClass({
         return (
             <div>
                 {this.state.data.map(function (anexo) {
+
+                    let tipo = '';
+
+                    if (anexo.tipo.nome == 'Video') {
+                        tipo = 'theaters'
+                    } else if (anexo.tipo.nome == 'Documento') {
+                        tipo = 'perm_media'
+                    } else if (anexo.tipo.nome == 'Link') {
+                        tipo = 'launch'
+                    } else {
+                        tipo = 'play_arrow';
+                    }
+
                     return (
                         <ul className="collection" key={anexo.id}>
                             <li className="collection-item avatar">
-                                <i className="material-icons circle red">play_arrow</i>
+                                <i className="material-icons circle teal">{tipo}</i>
                                 <span className="title">{anexo.nome}</span>
                                 <p>Adicionado por {anexo.usuario.nome} <br/>
                                     Postado em {anexo.cadastro}
@@ -62,7 +75,11 @@ const Favoritos = React.createClass({
         this.load();
     },
 
-    handleSubmit: function () {
+    handleSubmit: function (e) {
+
+        e.preventDefault();
+
+        var _this = this;
 
         $.ajax({
             type: 'POST',
@@ -72,10 +89,7 @@ const Favoritos = React.createClass({
             },
             cache: false,
             success: function (data) {
-                alert(data.msg);
-            },
-            error: function (data) {
-                alert(data.msg);
+                _this.load();
             }
         });
 
@@ -85,9 +99,7 @@ const Favoritos = React.createClass({
 
         var status = 'stars';
 
-        console.log(this.state.favorito);
-
-        if (this.state.favorito === true) {
+        if (this.state.favorito == true) {
             status = 'star';
         }
 
@@ -131,8 +143,13 @@ const Container = React.createClass({
                             <div className="row">
                                 <div className="card teal">
                                     <div className="card-content white-text">
-                                        <b>{this.state.data.nome}</b>
+                                        <b>{this.state.data.numero_formatado} - {this.state.data.nome}</b>
                                         <Favoritos musica={this.props.musica}/>
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-content">
+                                        <pre data-key="C">{this.state.data.letra}</pre>
                                     </div>
                                 </div>
                                 <Anexos musica={this.props.musica}/>
@@ -182,6 +199,10 @@ const Render = React.createClass({
 if (document.getElementById('single')) {
 
     var musica = $("#single").data('musica');
+
+    $(function () {
+        $("pre").transpose("C");
+    });
 
     ReactDOM.render(
         <Render musica={musica}/>,

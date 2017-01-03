@@ -13,7 +13,9 @@ const NavBar = React.createClass({
                     </ul>
 
                     <ul id="nav-mobile" className="side-nav">
+                        <li><a href="/">Iniciar</a></li>
                         <li><a href="#">Entrar</a></li>
+                        <li><a href="/favoritos">Favoritos</a></li>
                     </ul>
                     <a href="#" data-activates="nav-mobile" className="button-collapse"><i className="material-icons">menu</i></a>
                 </div>

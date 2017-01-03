@@ -56,7 +56,7 @@ const Container = React.createClass({
 
                     <div className="row">
                         <div className="col s12 m12">
-                            <h2 className="center brown-text">Cole&ccedil;&otilde;es</h2>
+                            <h2 className="center teal-text">Cole&ccedil;&otilde;es</h2>
                         </div>
                         {this.state.data.map(function (colecao) {
                             var href = '/colecao/' + colecao.nome.toLowerCase();

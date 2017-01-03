@@ -57,24 +57,12 @@ const Favoritos = React.createClass({
 const Container = React.createClass({
 
     getInitialState: function () {
-        return {data: [], categoria: []}
+        return {data: []}
     },
 
     load: function () {
 
-        var slice = '';
-
-        if (this.props.categoria) {
-            slice = this.props.categoria;
-
-            $.get('/api/categoria/' + slice + '/single', function (result) {
-                this.setState({categoria: result})
-            }.bind(this));
-
-            console.log(this.state.categoria)
-        }
-
-        $.get('/api/musicas/' + slice, function (result) {
+        $.get('/api/favoritos', function (result) {
             this.setState({data: result})
         }.bind(this));
 
@@ -95,8 +83,7 @@ const Container = React.createClass({
                                 <nav>
                                     <div className="nav-wrapper teal">
                                         <div className="col s12">
-                                            <a href="#!" className="breadcrumb">{this.state.categoria.colecao}</a>
-                                            <a className="breadcrumb">{this.state.categoria.nome}</a>
+                                            <a className="breadcrumb">Favoritos</a>
                                         </div>
                                     </div><br/>
                                 </nav>
@@ -138,20 +125,17 @@ const Render = React.createClass({
 
     render: function () {
         return (
-            <Container categoria={this.props.categoria} categoriaNome={this.props.categoriaNome}/>
+            <Container />
         )
     }
 
 });
 
-if (document.getElementById('views')) {
-
-    var categoria = $("#views").data('categoria');
-    var categoriaNome = $("#views").data('categoria-nome');
+if (document.getElementById('favoritos')) {
 
     ReactDOM.render(
-        <Render categoria={categoria} categoriaNome={categoriaNome}/>,
-        document.getElementById('views')
+        <Render/>,
+        document.getElementById('favoritos')
     );
 
 }

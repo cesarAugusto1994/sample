@@ -34,6 +34,13 @@ class Anexos implements \JsonSerializable
     private $nome;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Tipo")
+     * @ORM\JoinColumn(referencedColumnName="id", name="tipo_id")
+     * @var Tipo
+     */
+    private $tipo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Musica")
      * @ORM\JoinColumn(name="musica_id", referencedColumnName="id")
      * @var Musica
@@ -81,6 +88,22 @@ class Anexos implements \JsonSerializable
     public function setNome($nome)
     {
         $this->nome = $nome;
+    }
+
+    /**
+     * @return Tipo
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * @param Tipo $tipo
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
     }
 
     /**
@@ -155,6 +178,7 @@ class Anexos implements \JsonSerializable
         return [
             'id' => $this->id,
             'nome' => $this->nome,
+            'tipo' => $this->tipo,
             'usuario' => $this->usuario,
             'cadastro' =>$this->cadastro->format('d, F y')
         ];

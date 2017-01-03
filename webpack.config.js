@@ -9,6 +9,7 @@ module.exports = {
         "./src/front/views.js",
         "./src/front/single.js",
         "./src/front/finder.js",
+        "./src/front/favoritos.js",
         "./src/front/form-musicas.js"
     ],
     output: {

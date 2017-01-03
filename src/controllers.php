@@ -58,6 +58,10 @@ $app->get('/form-musicas', function () use ($app) {
     return $app['twig']->render('form-musicas.html.twig', array());
 });
 
+$app->get('/favoritos', function () use ($app) {
+    return $app['twig']->render('favoritos.html.twig', array());
+});
+
 /***********************************************************
  * Api
  **********************************************************/
@@ -140,30 +144,47 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
 $app->get('/api/favorito', function (Request $request) use ($app) {
 
-    $request->request->set('musica', 1);
     $request->request->set('usuario', 1);
 
-    if (empty($request->request->all())) {
-        return new \Symfony\Component\HttpFoundation\JsonResponse('Nenhum dado foi enviado.');
-    }
-
-    if (empty($request->request->get('usuario'))) {
+    if (empty($request->get('usuario'))) {
         return new \Symfony\Component\HttpFoundation\JsonResponse('Usuario nao informado.');
     }
 
-    if (empty($request->request->get('musica'))) {
+    if (empty($request->get('musica'))) {
         return new \Symfony\Component\HttpFoundation\JsonResponse('Musica nao informada.');
     }
 
-    $usuario = $app['usuario.repository']->find($request->request->get('usuario'));
-    $musica = $app['musica.repository']->find($request->request->get('musica'));
+    $usuario = $app['usuario.repository']->find($request->get('usuario'));
+    $musica = $app['musica.repository']->find($request->get('musica'));
 
     $favorito = $app['favoritos.repository']->findOneBy([
         'usuario' => $usuario,
         'musica' => $musica
     ]);
 
-    return new JsonResponse($favorito);
+    return new JsonResponse($favorito ? true : false);
+});
+
+$app->get('/api/favoritos', function (Request $request) use ($app) {
+
+    $request->request->set('usuario', 1);
+
+    if (empty($request->get('usuario'))) {
+        return new \Symfony\Component\HttpFoundation\JsonResponse('Usuario nao informado.');
+    }
+
+
+    $usuario = $app['usuario.repository']->find($request->get('usuario'));
+
+    $favoritos = $app['favoritos.repository']->findBy([
+        'usuario' => $usuario,
+    ]);
+
+    $favoritos = array_map(function ($musica) {
+        return $musica->getMusica();
+    }, $favoritos);
+
+    return new JsonResponse($favoritos);
 });
 
 $app->mount('', include __DIR__ . '/controllers/post.php');

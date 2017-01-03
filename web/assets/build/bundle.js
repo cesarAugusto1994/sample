@@ -9,7 +9,8 @@ webpackJsonp([0,1],[
 	__webpack_require__(49);
 	__webpack_require__(50);
 	__webpack_require__(51);
-	module.exports = __webpack_require__(52);
+	__webpack_require__(52);
+	module.exports = __webpack_require__(53);
 
 
 /***/ },
@@ -109,7 +110,7 @@ webpackJsonp([0,1],[
 	                        { className: "col s12 m12" },
 	                        React.createElement(
 	                            "h2",
-	                            { className: "center brown-text" },
+	                            { className: "center teal-text" },
 	                            "Cole\xE7\xF5es"
 	                        )
 	                    ),
@@ -4575,8 +4576,26 @@ webpackJsonp([0,1],[
 	                        null,
 	                        React.createElement(
 	                            "a",
+	                            { href: "/" },
+	                            "Iniciar"
+	                        )
+	                    ),
+	                    React.createElement(
+	                        "li",
+	                        null,
+	                        React.createElement(
+	                            "a",
 	                            { href: "#" },
 	                            "Entrar"
+	                        )
+	                    ),
+	                    React.createElement(
+	                        "li",
+	                        null,
+	                        React.createElement(
+	                            "a",
+	                            { href: "/favoritos" },
+	                            "Favoritos"
 	                        )
 	                    )
 	                ),
@@ -4714,6 +4733,65 @@ webpackJsonp([0,1],[
 	 * Created by cesar on 13/12/16.
 	 */
 	
+	const Favoritos = React.createClass({
+	    displayName: 'Favoritos',
+	
+	
+	    getInitialState: function () {
+	        return { musica: [], favorito: false };
+	    },
+	
+	    load: function () {
+	        $.get('/api/favorito?musica=' + this.props.musica, function (result) {
+	            this.setState({ favorito: !!result });
+	        }.bind(this));
+	    },
+	
+	    componentDidMount: function () {
+	        this.load();
+	    },
+	
+	    handleSubmit: function (e) {
+	
+	        e.preventDefault();
+	
+	        var _this = this;
+	
+	        $.ajax({
+	            type: 'POST',
+	            url: "/api/favoritos/add-remove",
+	            data: {
+	                musica: this.props.musica
+	            },
+	            cache: false,
+	            success: function (data) {
+	                _this.load();
+	            }
+	        });
+	    },
+	
+	    render: function () {
+	
+	        var status = 'stars';
+	
+	        if (this.state.favorito == true) {
+	            status = 'star';
+	        }
+	
+	        return React.createElement(
+	            'a',
+	            { onClick: this.handleSubmit, className: 'secondary-content' },
+	            React.createElement(
+	                'i',
+	                {
+	                    className: 'material-icons' },
+	                status
+	            )
+	        );
+	    }
+	
+	});
+	
 	const Container = React.createClass({
 	    displayName: 'Container',
 	
@@ -4784,9 +4862,10 @@ webpackJsonp([0,1],[
 	                                ),
 	                                React.createElement('br', null)
 	                            ),
+	                            React.createElement('br', null),
 	                            this.state.data.map(function (musica) {
 	                                var href = '/musica/' + musica.nome.toLowerCase().replace(/ /g, '-');
-	                                var img = '/assets/custom/img/background1.jpg';
+	                                var img = '/assets/custom/img/teal.png';
 	                                return React.createElement(
 	                                    'div',
 	                                    { className: 'col s12 m4', key: musica.id },
@@ -4804,20 +4883,18 @@ webpackJsonp([0,1],[
 	                                                    'span',
 	                                                    {
 	                                                        className: 'card-title' },
-	                                                    musica.numero,
-	                                                    ' ',
-	                                                    musica.nome
+	                                                    musica.numero_formatado
 	                                                )
 	                                            ),
 	                                            React.createElement(
 	                                                'div',
 	                                                { className: 'card-content black-text' },
+	                                                React.createElement(Favoritos, { musica: musica.id }),
 	                                                React.createElement(
 	                                                    'p',
 	                                                    null,
-	                                                    musica.numero,
-	                                                    ' ',
-	                                                    musica.nome
+	                                                    musica.nome,
+	                                                    ' '
 	                                                )
 	                                            )
 	                                        )
@@ -4888,6 +4965,19 @@ webpackJsonp([0,1],[
 	            'div',
 	            null,
 	            this.state.data.map(function (anexo) {
+	
+	                let tipo = '';
+	
+	                if (anexo.tipo.nome == 'Video') {
+	                    tipo = 'theaters';
+	                } else if (anexo.tipo.nome == 'Documento') {
+	                    tipo = 'perm_media';
+	                } else if (anexo.tipo.nome == 'Link') {
+	                    tipo = 'launch';
+	                } else {
+	                    tipo = 'play_arrow';
+	                }
+	
 	                return React.createElement(
 	                    'ul',
 	                    { className: 'collection', key: anexo.id },
@@ -4896,8 +4986,8 @@ webpackJsonp([0,1],[
 	                        { className: 'collection-item avatar' },
 	                        React.createElement(
 	                            'i',
-	                            { className: 'material-icons circle red' },
-	                            'play_arrow'
+	                            { className: 'material-icons circle teal' },
+	                            tipo
 	                        ),
 	                        React.createElement(
 	                            'span',
@@ -4939,7 +5029,11 @@ webpackJsonp([0,1],[
 	        this.load();
 	    },
 	
-	    handleSubmit: function () {
+	    handleSubmit: function (e) {
+	
+	        e.preventDefault();
+	
+	        var _this = this;
 	
 	        $.ajax({
 	            type: 'POST',
@@ -4949,10 +5043,7 @@ webpackJsonp([0,1],[
 	            },
 	            cache: false,
 	            success: function (data) {
-	                alert(data.msg);
-	            },
-	            error: function (data) {
-	                alert(data.msg);
+	                _this.load();
 	            }
 	        });
 	    },
@@ -4961,9 +5052,7 @@ webpackJsonp([0,1],[
 	
 	        var status = 'stars';
 	
-	        console.log(this.state.favorito);
-	
-	        if (this.state.favorito === true) {
+	        if (this.state.favorito == true) {
 	            status = 'star';
 	        }
 	
@@ -5031,9 +5120,24 @@ webpackJsonp([0,1],[
 	                                    React.createElement(
 	                                        'b',
 	                                        null,
+	                                        this.state.data.numero_formatado,
+	                                        ' - ',
 	                                        this.state.data.nome
 	                                    ),
 	                                    React.createElement(Favoritos, { musica: this.props.musica })
+	                                )
+	                            ),
+	                            React.createElement(
+	                                'div',
+	                                { className: 'card' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'card-content' },
+	                                    React.createElement(
+	                                        'pre',
+	                                        { 'data-key': 'C' },
+	                                        this.state.data.letra
+	                                    )
 	                                )
 	                            ),
 	                            React.createElement(Anexos, { musica: this.props.musica }),
@@ -5108,6 +5212,10 @@ webpackJsonp([0,1],[
 	if (document.getElementById('single')) {
 	
 	    var musica = $("#single").data('musica');
+	
+	    $(function () {
+	        $("pre").transpose("C");
+	    });
 	
 	    ReactDOM.render(React.createElement(Render, { musica: musica }), document.getElementById('single'));
 	}
@@ -5208,6 +5316,188 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 52 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by cesar on 13/12/16.
+	 */
+	
+	const Favoritos = React.createClass({
+	    displayName: 'Favoritos',
+	
+	
+	    getInitialState: function () {
+	        return { musica: [], favorito: false };
+	    },
+	
+	    load: function () {
+	        $.get('/api/favorito?musica=' + this.props.musica, function (result) {
+	            this.setState({ favorito: !!result });
+	        }.bind(this));
+	    },
+	
+	    componentDidMount: function () {
+	        this.load();
+	    },
+	
+	    handleSubmit: function (e) {
+	
+	        e.preventDefault();
+	
+	        var _this = this;
+	
+	        $.ajax({
+	            type: 'POST',
+	            url: "/api/favoritos/add-remove",
+	            data: {
+	                musica: this.props.musica
+	            },
+	            cache: false,
+	            success: function (data) {
+	                _this.load();
+	            }
+	        });
+	    },
+	
+	    render: function () {
+	
+	        var status = 'stars';
+	
+	        if (this.state.favorito == true) {
+	            status = 'star';
+	        }
+	
+	        return React.createElement(
+	            'a',
+	            { onClick: this.handleSubmit, className: 'secondary-content' },
+	            React.createElement(
+	                'i',
+	                {
+	                    className: 'material-icons' },
+	                status
+	            )
+	        );
+	    }
+	
+	});
+	
+	const Container = React.createClass({
+	    displayName: 'Container',
+	
+	
+	    getInitialState: function () {
+	        return { data: [] };
+	    },
+	
+	    load: function () {
+	
+	        $.get('/api/favoritos', function (result) {
+	            this.setState({ data: result });
+	        }.bind(this));
+	    },
+	
+	    componentDidMount: function () {
+	        this.load();
+	    },
+	
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            { id: 'index-banner', className: '' },
+	            React.createElement(
+	                'div',
+	                { className: 'section no-pad-bot' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'section' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            React.createElement(
+	                                'nav',
+	                                null,
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'nav-wrapper teal' },
+	                                    React.createElement(
+	                                        'div',
+	                                        { className: 'col s12' },
+	                                        React.createElement(
+	                                            'a',
+	                                            { className: 'breadcrumb' },
+	                                            'Favoritos'
+	                                        )
+	                                    )
+	                                ),
+	                                React.createElement('br', null)
+	                            ),
+	                            React.createElement('br', null),
+	                            this.state.data.map(function (musica) {
+	                                var href = '/musica/' + musica.nome.toLowerCase().replace(/ /g, '-');
+	                                var img = '/assets/custom/img/teal.png';
+	                                return React.createElement(
+	                                    'div',
+	                                    { className: 'col s12 m4', key: musica.id },
+	                                    React.createElement(
+	                                        'div',
+	                                        { className: 'card' },
+	                                        React.createElement(
+	                                            'a',
+	                                            { href: href, className: 'black-text' },
+	                                            React.createElement(
+	                                                'div',
+	                                                { className: 'card-image' },
+	                                                React.createElement('img', { src: img }),
+	                                                React.createElement(
+	                                                    'span',
+	                                                    {
+	                                                        className: 'card-title' },
+	                                                    musica.numero_formatado
+	                                                )
+	                                            ),
+	                                            React.createElement(
+	                                                'div',
+	                                                { className: 'card-content black-text' },
+	                                                React.createElement(Favoritos, { musica: musica.id }),
+	                                                React.createElement(
+	                                                    'p',
+	                                                    null,
+	                                                    musica.nome,
+	                                                    ' '
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                );
+	                            })
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+	
+	const Render = React.createClass({
+	    displayName: 'Render',
+	
+	
+	    render: function () {
+	        return React.createElement(Container, null);
+	    }
+	
+	});
+	
+	if (document.getElementById('favoritos')) {
+	
+	    ReactDOM.render(React.createElement(Render, null), document.getElementById('favoritos'));
+	}
+
+/***/ },
+/* 53 */
 /***/ function(module, exports) {
 
 	/**
