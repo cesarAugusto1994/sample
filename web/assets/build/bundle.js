@@ -4921,6 +4921,66 @@ webpackJsonp([0,1],[
 	    }
 	});
 	
+	const Favoritos = React.createClass({
+	    displayName: 'Favoritos',
+	
+	
+	    getInitialState: function () {
+	        return { musica: [], favorito: false };
+	    },
+	
+	    load: function () {
+	        $.get('/api/favorito?musica=' + this.props.musica, function (result) {
+	            this.setState({ favorito: !!result });
+	        }.bind(this));
+	    },
+	
+	    componentDidMount: function () {
+	        this.load();
+	    },
+	
+	    handleSubmit: function () {
+	
+	        $.ajax({
+	            type: 'POST',
+	            url: "/api/favoritos/add-remove",
+	            data: {
+	                musica: this.props.musica
+	            },
+	            cache: false,
+	            success: function (data) {
+	                alert(data.msg);
+	            },
+	            error: function (data) {
+	                alert(data.msg);
+	            }
+	        });
+	    },
+	
+	    render: function () {
+	
+	        var status = 'stars';
+	
+	        console.log(this.state.favorito);
+	
+	        if (this.state.favorito === true) {
+	            status = 'star';
+	        }
+	
+	        return React.createElement(
+	            'a',
+	            { onClick: this.handleSubmit, className: 'secondary-content' },
+	            React.createElement(
+	                'i',
+	                {
+	                    className: 'material-icons' },
+	                status
+	            )
+	        );
+	    }
+	
+	});
+	
 	const Container = React.createClass({
 	    displayName: 'Container',
 	
@@ -4973,15 +5033,7 @@ webpackJsonp([0,1],[
 	                                        null,
 	                                        this.state.data.nome
 	                                    ),
-	                                    React.createElement(
-	                                        'a',
-	                                        { href: '#!', className: 'secondary-content' },
-	                                        React.createElement(
-	                                            'i',
-	                                            { className: 'material-icons' },
-	                                            'stars'
-	                                        )
-	                                    )
+	                                    React.createElement(Favoritos, { musica: this.props.musica })
 	                                )
 	                            ),
 	                            React.createElement(Anexos, { musica: this.props.musica }),

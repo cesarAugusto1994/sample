@@ -46,6 +46,59 @@ const Anexos = React.createClass({
     }
 });
 
+const Favoritos = React.createClass({
+
+    getInitialState: function () {
+        return {musica: [], favorito: false}
+    },
+
+    load: function () {
+        $.get('/api/favorito?musica=' + this.props.musica, function (result) {
+            this.setState({favorito: !!result})
+        }.bind(this))
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    handleSubmit: function () {
+
+        $.ajax({
+            type: 'POST',
+            url: "/api/favoritos/add-remove",
+            data: {
+                musica: this.props.musica
+            },
+            cache: false,
+            success: function (data) {
+                alert(data.msg);
+            },
+            error: function (data) {
+                alert(data.msg);
+            }
+        });
+
+    },
+
+    render: function () {
+
+        var status = 'stars';
+
+        console.log(this.state.favorito);
+
+        if (this.state.favorito === true) {
+            status = 'star';
+        }
+
+        return (
+            <a onClick={this.handleSubmit} className="secondary-content"><i
+                className="material-icons">{status}</i></a>
+        )
+    }
+
+});
+
 const Container = React.createClass({
 
     getInitialState: function () {
@@ -79,7 +132,7 @@ const Container = React.createClass({
                                 <div className="card teal">
                                     <div className="card-content white-text">
                                         <b>{this.state.data.nome}</b>
-                                        <a href="#!" className="secondary-content"><i className="material-icons">stars</i></a>
+                                        <Favoritos musica={this.props.musica}/>
                                     </div>
                                 </div>
                                 <Anexos musica={this.props.musica}/>
@@ -98,7 +151,7 @@ const Container = React.createClass({
 
 const ModalForm = React.createClass({
 
-    render : function () {
+    render: function () {
         return (
             <div id="modal1" className="modal">
                 <div className="modal-content">
@@ -117,10 +170,10 @@ const Render = React.createClass({
 
     render: function () {
         return (
-        <div>
-            <Container musica={this.props.musica}/>
-            <ModalForm />
-        </div>
+            <div>
+                <Container musica={this.props.musica}/>
+                <ModalForm />
+            </div>
         )
     }
 

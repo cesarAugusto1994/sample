@@ -21,3 +21,11 @@ $app['musica.repository'] = function () use ($app) {
 $app['anexo.repository'] = function () use ($app) {
     return $app['orm.em']->getRepository(\Api\Entities\Anexos::class);
 };
+
+$app['favoritos.repository'] = function () use ($app) {
+    return $app['orm.em']->getRepository(\Api\Entities\Favoritos::class);
+};
+
+$app['usuario.repository'] = function () use ($app) {
+    return $app['orm.em']->getRepository(\Api\Entities\Usuario::class);
+};

@@ -111,7 +111,7 @@ $app->get('/api/categoria/criar/{colecao}', function ($colecao) use ($app) {
     $colecao = $app['colecao.repository']->find($colecao);
 
     $categoria = new \Api\Entities\Categoria();
-    $categoria->setNome(substr(md5(microtime()), 0,3));
+    $categoria->setNome(substr(md5(microtime()), 0, 3));
     $categoria->setImagem('background' . rand(1, 3) . '.jpg');
     $categoria->setColecao($colecao);
 
@@ -137,3 +137,33 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
 */
+
+$app->get('/api/favorito', function (Request $request) use ($app) {
+
+    $request->request->set('musica', 1);
+    $request->request->set('usuario', 1);
+
+    if (empty($request->request->all())) {
+        return new \Symfony\Component\HttpFoundation\JsonResponse('Nenhum dado foi enviado.');
+    }
+
+    if (empty($request->request->get('usuario'))) {
+        return new \Symfony\Component\HttpFoundation\JsonResponse('Usuario nao informado.');
+    }
+
+    if (empty($request->request->get('musica'))) {
+        return new \Symfony\Component\HttpFoundation\JsonResponse('Musica nao informada.');
+    }
+
+    $usuario = $app['usuario.repository']->find($request->request->get('usuario'));
+    $musica = $app['musica.repository']->find($request->request->get('musica'));
+
+    $favorito = $app['favoritos.repository']->findOneBy([
+        'usuario' => $usuario,
+        'musica' => $musica
+    ]);
+
+    return new JsonResponse($favorito);
+});
+
+$app->mount('', include __DIR__ . '/controllers/post.php');
